@@ -1,3 +1,7 @@
+package ca.programDemo.ui;
+
+import ca.programDemo.model.LensManager;
+
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
