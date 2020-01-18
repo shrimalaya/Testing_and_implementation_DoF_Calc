@@ -1,5 +1,7 @@
 package ca.programDemo.ui;
 
+import ca.programDemo.model.DepthOfFieldCalc;
+import ca.programDemo.model.Lens;
 import ca.programDemo.model.LensManager;
 
 import java.text.DecimalFormat;
@@ -29,21 +31,92 @@ public class CameraTextUI {
 
     public void show() {
         // BEGIN SAMPLE USING SCREEN AND KEYBOARD:
-        // (remove this: it's just to show you how to access the screen and keyboard!)
-        System.out.println("Enter an integer: ");
-        System.out.print(": ");
-        int count = in.nextInt();
 
-        System.out.println("Enter an double: ");
-        System.out.print(": ");
-        double value = in.nextDouble();
+        int isDone = 0;
+        do {
+            System.out.println("Lenses to pick from: ");
+            int count = 0;
+            for(Lens lens: manager) {
+                System.out.println("    " + (count++) + ". " + lens);
+            }
+            System.out.println("    (-1 to exit)");
+            System.out.print(": ");
+            int choice = in.nextInt();
 
-        System.out.println("Printing " + value + " out " + count + " times (with formatting)!");
-        for (int i = 0; i < count; i++) {
-            System.out.println(" --> " + formatM(value));
+            isDone = choice;
+
+            if(isDone==-1)
+            {
+                //do nothing
+                continue;
+            }
+            else if(choice<0 && choice> manager.getManagerSize()-1)
+            {
+                System.out.println("ERROR! Please enter a valid index");
+            }
+            else
+            {
+                double getAperture = takeAperture(choice);
+                if(getAperture!=-1)
+                {
+                    double getDistance = takeDistance();
+                    Lens DoF_lens = null;
+                    int counter = 0;
+                    for(Lens temp:manager){
+                        if(counter==choice)
+                            DoF_lens=temp;
+                        counter++;
+                    }
+                    DepthOfFieldCalc object = new DepthOfFieldCalc(DoF_lens, getDistance*1000,
+                                                                    getAperture);
+                    String nearFP = formatM(object.getNearFocalPoint()/1000);
+                    String farFP = formatM(object.getFarFocalPoint()/1000);
+                    String hyperFocalP = formatM(object.getHyperFocalDistInMM()/1000);
+                    String depthOfField = formatM(object.getDepthOfFieldInMM()/1000);
+                    System.out.println("In focus: " + nearFP + "m to " + farFP + "m [DOF = " + depthOfField + "m]");
+                    System.out.println("Hyperfocal point: " + hyperFocalP + "m");
+
+                }
+            }
+        } while(isDone != -1);
+    }
+
+    public double takeDistance() {
+        System.out.print("Distance to subject [m]: ");
+        double getDistance = in.nextDouble();
+        while(getDistance<0)
+        {
+            System.out.println("WARNING! Please enter a positive distance.");
+            System.out.print("Distance to subject [m]: ");
+            getDistance = in.nextDouble();
         }
+        return getDistance;
+    }
 
-        // END SAMPLE
+    public double takeAperture(int choice) {
+        System.out.print("Aperture [the F number]: ");
+        Lens lens = null;
+        int counter = 0;
+        for(Lens temp:manager){
+            if(counter==choice)
+                lens=temp;
+            counter++;
+        }
+        double F = in.nextDouble();
+        if(F<0)
+        {
+            System.out.println("ERROR! Enter a positive value smaller than the maximum aperture");
+            return -1;
+        }
+        else if(F < lens.getMaxAperture())
+        {
+            System.out.println("ERROR! Aperture cannot be greater than the maximum F-number of lens");
+            return -1;
+        }
+        else
+        {
+            return F;
+        }
     }
 
     private String formatM(double distanceInM) {
