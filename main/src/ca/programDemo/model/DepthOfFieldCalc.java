@@ -12,37 +12,19 @@ public class DepthOfFieldCalc {
         this.distanceOfObjInMM = distanceOfObjInMM;
         this.aperture = aperture;
         this.hyperFocalDistInMM = Math.pow(this.lens.getFocalLengthInMM(), 2) /
-                (this.aperture*this.CIRCLE_OF_CONFUSION_IN_MM);
+                (this.aperture*CIRCLE_OF_CONFUSION_IN_MM);
     }
 
     public Lens getLens() {
         return lens;
     }
 
-    public void setLens(Lens lens) {
-        this.lens = lens;
-        this.hyperFocalDistInMM = Math.pow(this.lens.getFocalLengthInMM(), 2) /
-                (this.aperture*this.CIRCLE_OF_CONFUSION_IN_MM);
-    }
-
     public double getDistanceOfObjInMM() {
         return distanceOfObjInMM;
     }
 
-    public void setDistanceOfObjInMM(double distanceOfObjInMM) {
-        this.distanceOfObjInMM = distanceOfObjInMM;
-        this.hyperFocalDistInMM = Math.pow(this.lens.getFocalLengthInMM(), 2) /
-                (this.aperture*this.CIRCLE_OF_CONFUSION_IN_MM);
-    }
-
     public double getAperture() {
         return aperture;
-    }
-
-    public void setAperture(double aperture) {
-        this.aperture = aperture;
-        this.hyperFocalDistInMM = Math.pow(this.lens.getFocalLengthInMM(), 2) /
-                (this.aperture*this.CIRCLE_OF_CONFUSION_IN_MM);
     }
 
     public static double getCircleOfConfusionInMM() {
@@ -54,22 +36,21 @@ public class DepthOfFieldCalc {
     }
 
     public double getNearFocalPoint() {
-        double nearFP = (hyperFocalDistInMM * distanceOfObjInMM) /
-                (hyperFocalDistInMM + (distanceOfObjInMM - lens.getFocalLengthInMM()));
-        return nearFP;
+        return (getHyperFocalDistInMM() * getDistanceOfObjInMM()) /
+                (getHyperFocalDistInMM() + (getDistanceOfObjInMM() - getLens().getFocalLengthInMM()));
     }
 
     public double getFarFocalPoint() {
-        double farFP = (hyperFocalDistInMM * distanceOfObjInMM) /
-                (hyperFocalDistInMM - (distanceOfObjInMM - lens.getFocalLengthInMM()));
-        if(distanceOfObjInMM > hyperFocalDistInMM)
+        double farFP = (getHyperFocalDistInMM() * getDistanceOfObjInMM()) /
+                (getHyperFocalDistInMM() - (getDistanceOfObjInMM() - getLens().getFocalLengthInMM()));
+
+        if(getDistanceOfObjInMM() > getHyperFocalDistInMM())
             farFP = Double.POSITIVE_INFINITY;
+
         return farFP;
     }
 
     public double getDepthOfFieldInMM() {
         return getFarFocalPoint() - getNearFocalPoint();
     }
-
-
 }
