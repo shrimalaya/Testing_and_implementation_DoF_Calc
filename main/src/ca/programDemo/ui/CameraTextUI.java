@@ -50,7 +50,7 @@ public class CameraTextUI {
                 //do nothing
                 continue;
             }
-            else if(choice<0 || choice> (manager.getManagerSize()-1))
+            else if(choice<0 ||  choice> (manager.getManagerSize()-1))
             {
                 System.out.println("ERROR! Please enter a valid index");
             }

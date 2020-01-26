@@ -15,24 +15,12 @@ public class Lens {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
-
     public double getMaxAperture() {
         return maxAperture;
     }
 
-    public void setMaxAperture(double maxAperture) {
-        this.maxAperture = maxAperture;
-    }
-
     public double getFocalLengthInMM() {
         return focalLengthInMM;
-    }
-
-    public void setFocalLengthInMM(double focalLengthInMM) {
-        this.focalLengthInMM = focalLengthInMM;
     }
 
     @Override
