@@ -4,7 +4,7 @@ public class DepthOfFieldCalc {
     private Lens lens;
     private double distanceOfObjInMM;
     private double aperture;
-    private static final double CIRCLE_OF_CONFUSION_IN_MM = 0.029;
+    public static final double CIRCLE_OF_CONFUSION_IN_MM = 0.029;
     private double hyperFocalDistInMM;
 
     public DepthOfFieldCalc(Lens lens, double distanceOfObjInMM, double aperture) {
@@ -21,14 +21,6 @@ public class DepthOfFieldCalc {
 
     public double getDistanceOfObjInMM() {
         return distanceOfObjInMM;
-    }
-
-    public double getAperture() {
-        return aperture;
-    }
-
-    public static double getCircleOfConfusionInMM() {
-        return CIRCLE_OF_CONFUSION_IN_MM;
     }
 
     public double getHyperFocalDistInMM(){

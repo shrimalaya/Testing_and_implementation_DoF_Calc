@@ -52,7 +52,7 @@ public class CameraTextUI {
             }
             else if(choice<0 ||  choice> (manager.getManagerSize()-1))
             {
-                System.out.println("ERROR! Please enter a valid index");
+                System.out.println("ERROR: Invalid lens index");
             }
             else
             {
@@ -105,12 +105,12 @@ public class CameraTextUI {
         double F = in.nextDouble();
         if(F<0)
         {
-            System.out.println("ERROR! Enter a positive value smaller than the maximum aperture");
+            System.out.println("ERROR: Enter a positive value smaller than the maximum aperture");
             return -1;
         }
         else if(F < lens.getMaxAperture())
         {
-            System.out.println("ERROR! Aperture cannot be greater than the maximum F-number of lens");
+            System.out.println("ERROR: This aperture is not possible with this lens");
             return -1;
         }
         else

@@ -23,4 +23,10 @@ class LensTest {
         Lens lens = new Lens("Canon", 1.8, 50);
         assertEquals(50, lens.getFocalLengthInMM(), 0.01);
     }
+
+    @Test
+    void testToString() {
+        Lens lens = new Lens("Canon", 1.8, 50);
+        assertEquals("Canon  50.0mm  F1.8", lens.toString());
+    }
 }
