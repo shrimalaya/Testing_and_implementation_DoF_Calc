@@ -27,6 +27,6 @@ class LensTest {
     @Test
     void testToString() {
         Lens lens = new Lens("Canon", 1.8, 50);
-        assertEquals("Canon  50.0mm  F1.8", lens.toString());
+        assertEquals("Canon  50mm  F1.8", lens.toString());
     }
 }
